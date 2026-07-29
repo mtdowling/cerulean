@@ -25,6 +25,9 @@ local function test_formatter_opts(test_opts)
     if test_opts and test_opts.hug_single_argument ~= nil then
         opts.hug_single_argument = test_opts.hug_single_argument
     end
+    if test_opts and test_opts.max_line_width ~= nil then
+        opts.max_line_width = test_opts.max_line_width
+    end
     return opts
 end
 
