@@ -1508,13 +1508,11 @@ describe("formatter structural block rendering", function()
             end
          ]=], [=[
             global record A
-                interface B where (
-                    function()
-                        global record C
-                            -- keep
-                        end -- keep
-                    end
-                )
+                interface B where (function()
+                    global record C
+                        -- keep
+                    end -- keep
+                end)
                 end
             end
          ]=]))
@@ -1680,7 +1678,7 @@ describe("formatter structural block rendering", function()
       -- flat layout: the flat separator would fuse the statement after the comment
       -- onto the comment line. Whether the group was tempted to go flat depends only
       -- on the width of the statements before the comment, so both lengths are here.
-      it("breaks the enclosing groups when the statement before the comment is short", helpers.format([[
+      it("breaks the enclosing groups when the statement before the comment is short", helpers.check([[
          f(function()
              for i = 1, 2 do
                  local a = g(i)
@@ -1688,19 +1686,9 @@ describe("formatter structural block rendering", function()
                  local b = h(i)
              end
          end)
-      ]], [[
-         f(
-             function()
-                 for i = 1, 2 do
-                     local a = g(i)
-                     -- keep
-                     local b = h(i)
-                 end
-             end
-         )
       ]]))
 
-      it("breaks the enclosing groups when the statement before the comment is long", helpers.format([[
+      it("breaks the enclosing groups when the statement before the comment is long", helpers.check([[
          f(function()
              for i = 1, 2 do
                  local a = g(i, some_quite_long_argument_name, another_long_argument_name, i)
@@ -1708,16 +1696,6 @@ describe("formatter structural block rendering", function()
                  local b = h(i)
              end
          end)
-      ]], [[
-         f(
-             function()
-                 for i = 1, 2 do
-                     local a = g(i, some_quite_long_argument_name, another_long_argument_name, i)
-                     -- keep
-                     local b = h(i)
-                 end
-             end
-         )
       ]]))
 
       it("keeps a short anonymous function body broken around the comment", helpers.check([[
